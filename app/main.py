@@ -1,5 +1,5 @@
-
 import logging
+import os
 
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
@@ -33,15 +33,22 @@ app = FastAPI(
 
 
 # --------------------------------------------------
-# CORS: Allow the local React frontend to connect
+# CORS: Local development + deployed frontend
 # --------------------------------------------------
+
+frontend_url = os.getenv("FRONTEND_URL", "").strip().rstrip("/")
+
+allowed_origins = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+]
+
+if frontend_url:
+    allowed_origins.append(frontend_url)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",
-        "http://127.0.0.1:5173",
-    ],
+    allow_origins=allowed_origins,
     allow_credentials=False,
     allow_methods=["GET", "POST"],
     allow_headers=["Content-Type"],
@@ -147,13 +154,13 @@ def chat(request: ChatRequest):
             message,
         )
 
-        # 3. Add the current message to the agent's context.
+        # 3. Add the current message to the agent context.
         history.append({
             "role": "user",
             "content": message,
         })
 
-        # 4. Run Nexus with the conversation history.
+        # 4. Run the Nexus agent.
         reply = run_agent(
             message,
             history=history,
@@ -165,14 +172,14 @@ def chat(request: ChatRequest):
                 "Please try again."
             )
 
-        # 5. Save the assistant's reply for future messages.
+        # 5. Save the assistant response.
         save_message(
             conversation_id,
             "assistant",
             reply,
         )
 
-        # 6. Return the response to React.
+        # 6. Return the response to the frontend.
         return {
             "reply": reply,
             "conversation_id": conversation_id,
@@ -185,6 +192,6 @@ def chat(request: ChatRequest):
             status_code=500,
             detail=(
                 "Nexus encountered an error. "
-                "Please check the backend terminal and try again."
+                "Please check the backend logs and try again."
             ),
         )
