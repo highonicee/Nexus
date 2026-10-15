@@ -1,0 +1,39 @@
+
+[
+  {
+    "id": 1,
+    "name": "Lens & Light Studio",
+    "service": "photographer",
+    "city": "Jaipur",
+    "price": 35000,
+    "specialties": ["wedding", "portrait"],
+    "rating": 4.8
+  },
+  {
+    "id": 2,
+    "name": "Golden Hour Films",
+    "service": "photographer",
+    "city": "Jaipur",
+    "price": 45000,
+    "specialties": ["wedding", "event"],
+    "rating": 4.6
+  },
+  {
+    "id": 3,
+    "name": "FitPath Coaching",
+    "service": "fitness coach",
+    "city": "Jaipur",
+    "price": 5000,
+    "specialties": ["weight training", "fitness"],
+    "rating": 4.5
+  },
+  {
+    "id": 4,
+    "name": "PixelCraft Studio",
+    "service": "photographer",
+    "city": "Delhi",
+    "price": 25000,
+    "specialties": ["portrait", "product"],
+    "rating": 4.7
+  }
+]

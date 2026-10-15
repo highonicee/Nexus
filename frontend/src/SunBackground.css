@@ -1,0 +1,19 @@
+
+.sun-background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: #f7f1e5;
+  color: #725b45;
+  pointer-events: none;
+}
+
+.sun-doodle {
+  width: clamp(230px, 35vw, 410px);
+  height: auto;
+  opacity: 0.19;
+  transform: rotate(-7deg);
+}
